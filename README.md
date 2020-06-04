@@ -26,3 +26,10 @@ rm_pkg <PACKAGE-NAME>
 # get me some randon values
 random <STRING> <LIMIT>
 ```
+
+**For development or contribution**
+
+* Download repo with any project name.
+* You must use `export BL_ENV='dev'` for development environment or,
+* `echo 'export BL_ENV='dev' >> ~/.zshrc or ~/.bashrc` 
+* to remove dev environment `unset BL_ENV`
