@@ -2,27 +2,51 @@
 
 set -e
 
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+GREEN='\033[0;32m'
+# normal as bash color
+NC='\033[0m'
+
+bl_import() {
+  source "${BL_DIR}/${BL_ACTIONS}/${1}.sh"
+}
+
+bl_error() {
+  echo -e "${RED}ERROR: ${1}${NC}"
+}
+
+bl_warning() {
+  echo -e "${YELLOW}WARNING: ${1}${NC}"
+}
+
+bl_info() {
+  echo -e "${GREEN}INFO: ${1}${NC}"
+}
+
 # load filename
 if [ ! -z "${BL_COMMAND}" ]; then
-  BL_FILENAME="${BL_DIR}/$BL_ACTIONS/${BL_COMMAND}.sh"
-
   # load if existed
-  if [[ -f "${BL_FILENAME}" ]]; then
+  if [[ -f "${BL_DIR}/$BL_ACTIONS/${BL_COMMAND}.sh" ]]; then
     # source the file if exist
-    source "${BL_FILENAME}"
+    bl_import "${BL_COMMAND}"
 
-    # run command after source
-    "$@"
+    if [ ! -z "${2}" ]; then
+      # run command after source
+      "$@"
+    else
+      bl_error "${BL_COMMAND} required value!"
+    fi
 
     #case $1 in
     #    has_pkg) "$@"; exit;;
     #    rm_pkg) "$@"; exit;;
     #esac
   else
-    echo "ERROR: ${BL_COMMAND} command does not exist"
+    bl_error "${BL_COMMAND} does not exist!"
   fi
 else
-  echo """ERROR: atleast 1 action is required! i.e ${BL_REPO} has_pkg make
+  bl_error """atleast 1 action is required! i.e ${BL_REPO} has_pkg make
 
       '${BL_REPO}' is main command,
       'has_pkg' is action
