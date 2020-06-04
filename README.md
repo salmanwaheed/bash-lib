@@ -2,6 +2,12 @@
 
 DRY Principle is don't write same code again and again so, reducing redundancy.
 
+**Install**
+
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/salmanwaheed/bash-lib/master/install.sh)"
+```
+
 **To Use**
 
 ```bash
