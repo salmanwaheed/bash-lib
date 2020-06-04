@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ins_pkg_with_tiny_info() {
+ins_pkg_info() {
   NAME=$1
   SIZE=$(sudo apt-cache --no-all-versions show "$NAME" | grep -i '^Installed-Size: ' | awk '{print $2}')
   sleep 1
