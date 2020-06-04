@@ -33,6 +33,7 @@ BL_DIR="${HOME}/.${BL_REPO}"
 # import packages according to environment
 IMPORT_FILE="${BL_DIR}/import.sh"
 
-[ -f "${IMPORT_FILE}" ] && source "${IMPORT_FILE}" ||
-  echo "Oh! some files are missing, its better to reinstall '${BL_REPO}' package. visit ${BL_README}"
-  exit
+[ -f "${IMPORT_FILE}" ] && source "${IMPORT_FILE}"
+# ||
+# echo "Oh! some files are missing, its better to reinstall '${BL_REPO}' package. visit ${BL_README}"
+# exit
