@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "${BL_DIR}/${BL_ACTIONS}/has_pkg.sh"
+bl_import has_pkg
 
 ins_pkg() {
   case "${1}" in

@@ -8,20 +8,31 @@ GREEN='\033[0;32m'
 # normal as bash color
 NC='\033[0m'
 
+# import any file endswith .sh with absolute path
 bl_import() {
   source "${BL_DIR}/${BL_ACTIONS}/${1}.sh"
 }
 
+# return message with red color as error message
 bl_error() {
   echo -e "${RED}ERROR: ${1}${NC}"
 }
 
+# return message with yellow color as warning message
 bl_warning() {
   echo -e "${YELLOW}WARNING: ${1}${NC}"
 }
 
+# return message with green color as information
 bl_info() {
   echo -e "${GREEN}INFO: ${1}${NC}"
+}
+
+# run apt update as background process
+bl_apt_update() {
+  bl_info "Updating new packages..."
+  sudo apt update >/dev/null 2>&1
+  bl_info "Packages have been updated!"
 }
 
 # load filename
@@ -52,6 +63,6 @@ else
       'has_pkg' is action
       'make' is package name
 
-      And you result will be. '/usr/bin/make' if you had 'make' installed
+      And your result will be. '/usr/bin/make' if you had 'make' installed & you are on dev env.
   """
 fi
