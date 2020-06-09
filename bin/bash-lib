@@ -21,7 +21,14 @@ BL_README="https://github.com/${BL_AUTHOR}/${BL_REPO}/blob/master/README.md"
 
 # full path starts from /home or /Users
 # production path
-BL_DIR="${HOME}/.${BL_REPO}"
+case $(uname -s) in
+  Darwin)
+    BL_DIR=$(brew --prefix ${BL_REPO})
+  ;;
+  *)
+    BL_DIR="${HOME}/.${BL_REPO}"
+  ;;
+esac
 
 # for development you must use
 # export BL_ENV='dev'
