@@ -7,6 +7,9 @@ set -e
 # command
 BL_COMMAND="$1"
 
+# method
+BL_METHOD="$2"
+
 # author & github username too
 BL_AUTHOR=salmanwaheed
 
@@ -19,28 +22,32 @@ BL_ACTIONS=actions
 # github readme.md
 BL_README="https://github.com/${BL_AUTHOR}/${BL_REPO}/blob/master/README.md"
 
-# full path starts from /home or /Users
-# production path
-case $(uname -s) in
-  Darwin)
-    BL_DIR=$(brew --prefix ${BL_REPO})
-  ;;
-  *)
-    BL_DIR="${HOME}/.${BL_REPO}"
-  ;;
-esac
-
 # for development you must use
 # export BL_ENV='dev'
 # in your terminal. if its empty it will work prod
 # use current project directory if its dev
 # development path
-[ "${BL_ENV}" == 'dev' ] && BL_DIR="${PWD}" && echo -e "You are running '${BL_ENV}' environment. Don't forget to use 'unset BL_ENV' to run production commands.\n"
+if [ "${BL_ENV}" == 'dev' ]; then
+  BL_DIR="${PWD}" && echo -e "You are running '${BL_ENV}' environment. Don't forget to use 'unset BL_ENV' to run production commands.\n"
+else
+  # full path starts from /
+  # production path
+  case $(uname -s) in
+    Darwin)
+      BL_DIR=$(brew --prefix ${BL_REPO})
+    ;;
+    *)
+      BL_DIR="${HOME}/.${BL_REPO}"
+    ;;
+  esac
+fi
 
 # import packages according to environment
 IMPORT_FILE="${BL_DIR}/import.sh"
 
-[ -f "${IMPORT_FILE}" ] && source "${IMPORT_FILE}"
-# ||
-# echo "Oh! some files are missing, its better to reinstall '${BL_REPO}' package. visit ${BL_README}"
-# exit
+if [ -f "${IMPORT_FILE}" ]; then
+  source "${IMPORT_FILE}"
+else
+ echo "Oh! some files are missing, its better to reinstall '${BL_REPO}' package. visit ${BL_README}"
+ exit
+fi
