@@ -34,7 +34,11 @@ else
   # production path
   case $(uname -s) in
     Darwin)
-      BL_DIR=$(brew --prefix ${BL_REPO})
+      if brew --prefix ${BL_REPO} >/dev/null 2>&1; then
+        BL_DIR=`brew --prefix ${BL_REPO}`
+      else
+        BL_DIR="${HOME}/.${BL_REPO}"
+      fi
     ;;
     *)
       BL_DIR="${HOME}/.${BL_REPO}"
